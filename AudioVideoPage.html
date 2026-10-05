@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Model Digital Twin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+        .container h1 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        #subtitles {
+            font-size: 14px;
+            color: #000;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        video {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .audio-controls {
+            margin-top: 15px;
+        }
+        .audio-controls input[type="range"] {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .info-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .info-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Record Model Digital Twin</h1>
+        <video id="video" controls>
+            <source src="https://jtauchus.github.io/PMC-HarvesterEnergyCenter/media/PMC%20MEP%20modeling.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div id="subtitles"></div>
+        <audio id="audio" src="https://jtauchus.github.io/PMC-HarvesterEnergyCenter/media/Record%20Level%20model.mp3" controls></audio>
+        <div class="audio-controls">
+            <label for="volume-control">Adjust Volume:</label>
+            <input type="range" id="volume-control" min="0" max="1" step="0.1" value="0.5">
+        </div>
+        <!-- CTA Link -->
+        <a href="https://pmcorp.com/consultation/" class="info-link" target="_blank">Contact PMC for More Information</a>
+    </div>
+
+    <script>
+        const subtitles = [
+            { start: 0.000, end: 5.251, text: "I created a Digital Twin! Yes, there is no shortage of this claim out there." },
+            { start: 5.251, end: 9.112, text: "My team at PMC likes to clarify this with levels." },
+            { start: 9.112, end: 15.059, text: "Click to view a rendered fly-through of what we consider a 'Record Level' federation of models." },
+            { start: 15.059, end: 27.261, text: "The value of a record model lies in its ability to integrate federated data across disciplines—architecture, structural systems, and MEP—providing a single source of truth for the entire facility." },
+            { start: 27.261, end: 32.358, text: "This level includes detailed sheets, schedules, systems, and equipment data." },
+            { start: 32.358, end: 39.154, text: "Offering the resources facility maintenance and engineering teams need to manage the building's lifecycle with certainty." },
+            { start: 39.154, end: 46.799, text: "By minimizing onsite access, it enhances safety and enables remote queries for critical information during emergencies." },
+            { start: 46.799, end: 54.290, text: "The record model drives collaboration, operational efficiency, and informed decision-making throughout the building lifecycle." },
+            { start: 54.290, end: 64.098, text: "Travel down the corridor to explore the next level of the Digital Twin with sensor integrations." }
+        ];
+
+        const audio = document.getElementById('audio');
+        const subtitlesDiv = document.getElementById('subtitles');
+        const volumeControl = document.getElementById('volume-control');
+
+        // Synchronize subtitles with audio narration
+        audio.addEventListener('timeupdate', () => {
+            const currentTime = audio.currentTime;
+            const currentSubtitle = subtitles.find(sub => currentTime >= sub.start && currentTime <= sub.end);
+            subtitlesDiv.textContent = currentSubtitle ? currentSubtitle.text : '';
+        });
+
+        // Adjust audio volume
+        volumeControl.addEventListener('input', (event) => {
+            audio.volume = event.target.value;
+        });
+    </script>
+</body>
+</html>
